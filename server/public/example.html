@@ -9,11 +9,7 @@ WebAssembly.instantiateStreaming(fetch('pow.wasm'))
   doExampleRequest();
 });
 
-async function doExampleRequest() {
-  let res = await fetch('/pow');
-  const powData = await res.json();
-  const challenge = base64Decode(powData.challenge);
-
+function computePow(challenge, difficulty) {
   // copy challenge so the wasm code can use it
   let ptr = basePtr;
   for (let i = 0; i < 64; i++) {
@@ -30,11 +26,19 @@ async function doExampleRequest() {
 
   // compute answer
   const t0 = performance.now();
-  while (!compute_pow(basePtr, powData.difficulty, 4294967295)) {
+  while (!compute_pow(basePtr, difficulty, 4294967295)) {
   }
   console.log(performance.now() - t0);
 
   const answer = HEAPU8.subarray(ptr - 32 - (64 - challenge.length), ptr);
+  return answer;
+}
+
+async function doExampleRequest() {
+  let res = await fetch('/pow');
+  const powData = await res.json();
+  const challenge = base64Decode(powData.challenge);
+  const answer = computePow(challenge, powData.difficulty);
   const encodedAnswer = base64Encode(answer);
 
   res = await fetch('/message', {
