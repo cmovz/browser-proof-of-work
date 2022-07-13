@@ -1,5 +1,5 @@
 # browser-proof-of-work
-Use proof of work to protect forms. Contains example [server](https://github.com/cmovz/browser-proof-of-work/blob/main/server/example_app.js) and [client](https://github.com/cmovz/browser-proof-of-work/blob/main/server/public/example.html) code, both JavaScript and WebAssembly for best performance.
+Use proof of work to protect forms. This repository contains example [server](https://github.com/cmovz/browser-proof-of-work/blob/main/server/example_app.js) and [client](https://github.com/cmovz/browser-proof-of-work/blob/main/server/public/example.html) code, both JavaScript and WebAssembly for best performance.
 
 ## Running the code
 Run the following commands:
