@@ -15,7 +15,8 @@ const CHALLENGE_EXPIRATION = 1000 * 60 * 10;
 // sets the number of leading 0 bits required for an answer
 const CHALLENGE_DIFFICULTY = 24;
 
-// the client code assumes the challenge will be no longer than 64 bytes
+// the client code assumes the challenge will be no longer than 64 bytes after
+// decoding the base64
 function generatePowChallenge() {
   const plaintext = JSON.stringify({timestamp: (new Date()).getTime()});
   const nonce = Buffer.alloc(12);
