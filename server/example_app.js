@@ -37,9 +37,11 @@ function generatePowChallenge() {
 }
 
 // TODO: this function also needs to verify that a challenge/answer pair is not
-// being reused. If you have only 1 node process you can store the pairs for the
-// last CHALLENGE_EXPIRATION minutes in memory, otherwise you will have to store
-// them somewhere else.
+// being reused. If you have only 1 node process you can store the pairs from
+// the last CHALLENGE_EXPIRATION minutes in memory, otherwise you will have to
+// store them somewhere else. You might want to store just the challenge, if so
+// it can't be reused. Note there's no problem reusing a challenge because
+// knowing an answer won't help find another one.
 function verifyPowChallenge(challenge, answer) {
   const blob = Buffer.concat([challenge, answer]);
   if (blob.length < 64 || blob.length > 256) {
