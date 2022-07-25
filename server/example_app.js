@@ -63,9 +63,12 @@ function verifyPowChallenge(challenge, answer) {
   );
 
   try {
-    let plaintext = decipher.update(challenge.slice(12, challenge.length - 16));
     decipher.setAuthTag(challenge.slice(challenge.length - 16));
-    plaintext += decipher.final();
+
+    let plaintext = Buffer.concat([
+      decipher.update(challenge.slice(12, challenge.length - 16)),
+      decipher.final(),
+    ]);
 
     const data = JSON.parse(plaintext.toString());
     const now = (new Date()).getTime();
